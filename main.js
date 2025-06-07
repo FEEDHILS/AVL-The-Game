@@ -104,27 +104,64 @@ class AVLTree {
 
     Print(node = this.root) {
         if (node) {
-            // this.Print(node.left);
-            // console.log(node.key);
-            // this.Print(node.right);
-            if (node == this.root)
-                console.log( node.height + ': ' + node.key);
-            
-            if (node.left)
-                console.log( node.left.height + ': ' + node.left.key);
-            
-            if (node.right)
-                console.log(node.right.height + ': ' + node.right.key);
+            // Node, Position(Left to Right), Depth
+            let queue = [ [node, 0, 0] ];
+            let output = [  ];
+            let maxDepth = 0;
+            while(queue.length > 0)
+            {
+                const [current, pos, depth] = queue.shift();
+                output.push( {"Node" : current, "Position": pos, "Depth": depth} );
 
-            this.Print(node.left);
-            this.Print(node.right);
+                if ( current.left && !(current.left in output) )
+                    queue.push( [current.left, pos*2, depth+1] );
+
+                if ( current.right && !(current.right in output) )
+                    queue.push( [current.right, pos*2+1, depth+1] );
+
+                maxDepth = (depth > maxDepth) ? depth : maxDepth;
+            }
+
+            console.log(output);
+            return [output, maxDepth];
         }
     }
 }
 
-// === Пример использования ===
+// Тестовые Данные для Дерева
 const tree = new AVLTree();
-[10, 20, 30, 40, 50, 25, 35, 60, 55].forEach(k => tree.InsertKey(k));
+const elements = [10, 20, 30, 40, 50, 25, 35, 60, 55];
+elements.forEach(k => tree.InsertKey(k));
 
-console.log("Вывод: ");
-tree.Print();
+let [Layout, maxDepth] = tree.Print(); // Возвращает набор вида (Нод, Позиция, Глубина). Используется BFS алгоритм (Поиск в ширину).
+
+
+
+
+const TreeContainer = document.querySelector(".tree");
+function CreateNode(layoutElement)
+{
+    const child = document.createElement("div");
+    child.className = "circle";
+    child.id = "id"+layoutElement.Node.key;
+    child.textContent = layoutElement.Node.key;
+
+    const NodeSize = 64; // Захардкоженный размер ноды (64x64), очень плохо...(не дай бог его в css поменять)
+    
+    // Код снизу отвечает за позиционирование нодов, TODO: Сделать его адаптивным!!
+    child.style.position = "absolute";
+
+
+    child.style.left = layoutElement.Position*64 + (window.innerWidth/2) - NodeSize/2 + "px";
+    
+    child.style.top = layoutElement.Depth * 96 + "px";
+
+
+    TreeContainer.appendChild(child);
+}
+
+
+// Инициализация начальных элементов дерева
+for (const i in Layout) {
+    CreateNode(Layout[i]);
+}

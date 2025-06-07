@@ -1,0 +1,23 @@
+/* Hello World! */
+
+body {
+    display: flex;
+
+    justify-content: center;
+    /* align-content: center; */
+}
+
+.circle {
+    border: solid;
+    border-width: 0.2rem;
+    border-radius: 50%;
+    border-color: black;
+    
+    background-color: gainsboro;
+    width: 64px;
+    height: 64px;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
