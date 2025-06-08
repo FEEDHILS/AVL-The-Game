@@ -57,16 +57,18 @@ class AVLTree {
     }
 
 
-    insert(node, key) {
+    insert(node, key, doBalance=true) {
         if (!node) return new Node(key);
 
         if (key < node.key)
-            node.left = this.insert(node.left, key);
+            node.left = this.insert(node.left, key, doBalance);
         else if (key > node.key)
-            node.right = this.insert(node.right, key);
+            node.right = this.insert(node.right, key, doBalance);
         else
             return node; // дубликаты не разрешены
 
+        if (!doBalance)
+            return node;
 
         node.height = 1 + Math.max(this.getHeight(node.left), this.getHeight(node.right));
 
@@ -97,8 +99,8 @@ class AVLTree {
     }
 
 
-    InsertKey(key) {
-        this.root = this.insert(this.root, key);
+    InsertKey(key, doBalance=true) {
+        this.root = this.insert(this.root, key, doBalance);
     }
 
 
@@ -132,6 +134,7 @@ class AVLTree {
 const tree = new AVLTree();
 const elements = [10, 20, 30, 40, 50, 25, 35, 60, 55];
 elements.forEach(k => tree.InsertKey(k));
+tree.InsertKey(70, false); // Неотбалансированный элемент для теста
 
 let [Layout, maxDepth] = tree.Print(); // Возвращает набор вида (Нод, Позиция, Глубина). Используется BFS алгоритм (Поиск в ширину).
 
