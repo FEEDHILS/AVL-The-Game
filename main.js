@@ -138,6 +138,12 @@ let [Layout, maxDepth] = tree.Print(); // Возвращает набор вид
 
 
 
+function CalculatePosition(pos, depth)
+{
+    const spacing = window.innerWidth/2 / (2**depth+1);
+    return spacing * (pos+1);
+}
+
 const TreeContainer = document.querySelector(".tree");
 function CreateNode(layoutElement)
 {
@@ -151,10 +157,9 @@ function CreateNode(layoutElement)
     // Код снизу отвечает за позиционирование нодов, TODO: Сделать его адаптивным!!
     child.style.position = "absolute";
 
-
-    child.style.left = layoutElement.Position*64 + (window.innerWidth/2) - NodeSize/2 + "px";
     
-    child.style.top = layoutElement.Depth * 96 + "px";
+    child.style.left = CalculatePosition(layoutElement.Position, layoutElement.Depth) - NodeSize/2 + window.innerWidth/4 + "px";
+    child.style.top = layoutElement.Depth * 148 + "px";
 
 
     TreeContainer.appendChild(child);
