@@ -366,7 +366,7 @@ class TreeUI {
         }
         
         const size = 100 - 16*item.depth;
-        const left = CalculatePosition(item.position, item.depth) - size + window.innerWidth/4;
+        const left = CalculatePosition(item.position, item.depth) - size/1.2;
         
         element.style.position = "absolute";
         element.style.left = `${left}px`;
@@ -503,7 +503,7 @@ class TreeUI {
 
 function CalculatePosition(pos, depth) {
     const spacing = window.innerWidth/2 / (2**depth+1);
-    return spacing * (pos + 1);
+    return spacing*2 * (pos + 1);
 
     // Экспериментальный код внизу
 
