@@ -484,6 +484,7 @@ class TreeUI {
     // 4) Пересчитываем высоты/балансы от корня вниз
     this.recalcAll();
 
+    this.selectedNode = null;
     // 5) Перерисовываем
     this.renderTree();
   }
