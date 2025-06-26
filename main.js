@@ -337,7 +337,7 @@ class TreeUI {
 
     renderTree() {
         this.treeContainer.innerHTML = "";
-        // document.getElementById('treeLines').innerHTML = '';
+        document.getElementById('treeLines').innerHTML = '';
         const [layout] = this.tree.print();
         
         layout.forEach(item => {
@@ -345,13 +345,13 @@ class TreeUI {
         });
         
         this.checkBalance();
-        // layout.forEach(item => {
-        //     // this.createNodeElement(item);
-        //     if (item.node.left)
-        //         this.drawEdge(item.node.key, item.node.left.key);
-        //     if (item.node.right)
-        //         this.drawEdge(item.node.key, item.node.right.key);
-        // });
+        layout.forEach(item => {
+            // this.createNodeElement(item);
+            if (item.node.left)
+                this.drawEdge(item.node.key, item.node.left.key);
+            if (item.node.right)
+                this.drawEdge(item.node.key, item.node.right.key);
+        });
     }
 
     createNodeElement(item) {
@@ -382,26 +382,42 @@ class TreeUI {
         this.treeContainer.appendChild(element);
     }
 
+
+    toSvgCoords(svg, x, y) {
+        const pt = svg.createSVGPoint();
+        pt.x = x; pt.y = y;
+        // переводим экранную точку (clientX,clientY) в SVG-координаты
+        return pt.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
     drawEdge(parentKey, childKey) {
-        const svg = document.getElementById('treeLines');
-        const p = document.getElementById(`node-${parentKey}`).getBoundingClientRect();
-        const c = document.getElementById(`node-${childKey}`).getBoundingClientRect();
-        // координаты внутри SVG (от левого верхнего угла контейнера)
-        const offset = this.treeContainer.getBoundingClientRect();
-        const x1 = p.left + p.width/2  - offset.left;
-        const y1 = p.top  + p.height/2 - offset.top;
-        const x2 = c.left + c.width/2  - offset.left;
-        const y2 = c.top  + c.height/2 - offset.top;
-        
+        const svg   = document.getElementById('treeLines');
+        const pEl   = document.getElementById(`node-${parentKey}`);
+        const cEl   = document.getElementById(`node-${childKey}`);
+
+        const prep = pEl.getBoundingClientRect();
+        const crep = cEl.getBoundingClientRect();
+
+        // экранные центры нод
+        const cx1 = prep.left + prep.width/2;
+        const cy1 = prep.top  + prep.height/2;
+        const cx2 = crep.left + crep.width/2;
+        const cy2 = crep.top  + crep.height/2;
+
+        // конвертация в SVG-координаты
+        const p1 = this.toSvgCoords(svg, cx1, cy1);
+        const p2 = this.toSvgCoords(svg, cx2, cy2);
+
         const line = document.createElementNS(svg.namespaceURI, 'line');
-        line.setAttribute('x1', x1);
-        line.setAttribute('y1', y1);
-        line.setAttribute('x2', x2);
-        line.setAttribute('y2', y2);
+        line.setAttribute('x1', p1.x);
+        line.setAttribute('y1', p1.y);
+        line.setAttribute('x2', p2.x);
+        line.setAttribute('y2', p2.y);
         line.setAttribute('stroke', '#333');
         line.setAttribute('stroke-width', '2');
         svg.appendChild(line);
     }
+
 
     toggleNodeSelection(node, element) {
         console.log(this.selectedNode);
