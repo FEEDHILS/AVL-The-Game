@@ -1,13 +1,21 @@
 /* main.css */
 body {
     display: flex;
+    height: 100vh !important;
     flex-direction: column;
     align-items: center;
     padding: 20px;
     font-family: Arial, sans-serif;
 }
 
-.tree {
+.start {
+    display: flex;
+    justify-content: end;
+    height: 100%;
+    flex-flow: column;
+}
+
+.tree, svg {
     position: relative;
     min-height: 500px;
     width: 100%;
@@ -28,15 +36,24 @@ body {
     background-color: gainsboro;
     width: 64px;
     height: 64px;
+    /* padding : -35% 0%; */
     display: flex;
+    flex-flow: column   ;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
     position: absolute;
+    text-align: center;
 }
 
 .circle.unbalanced {
+    background-color: #fff099;
+    border-color: #ff9d00;
+    animation: pulse 1.5s infinite;
+}
+
+.circle.critical {
     background-color: #ff9999;
     border-color: #ff0000;
     animation: pulse 1.5s infinite;
@@ -77,6 +94,12 @@ button:disabled {
     margin-top: 20px;
     font-size: 18px;
     font-weight: bold;
+}
+
+.controls {
+    display: none;
+    gap: 5vw;
+    /* flex-flow: ; */
 }
 
 @keyframes pulse {

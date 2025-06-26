@@ -8,7 +8,19 @@
     <title>AVL Tree Game</title>
 </head>
 <body>
-    <div class="tree"></div>
     <script src="main.js"></script>
+    <div class="start">
+        <h1>AVL-Tree: The Game</h1>
+        <button onclick="StartTheGame()">Начать Игру</button>
+    </div>
+    <div class="controls">
+        <button onclick="RotateLeft()" class="game">'Левый Поворот'</button>
+        <button onclick="RotateRight()" class="game">'Правый Поворот'</button>
+    </div>
+    <div class="tree"></div>
+
+    <!-- <svg id="treeLines"
+       xmlns="http://www.w3.org/2000/svg"></svg> -->
+    
 </body>
 </html>
