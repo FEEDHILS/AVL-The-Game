@@ -47,17 +47,18 @@ body {
     text-align: center;
 }
 
-.circle.unbalanced {
+.circle.unbalanced, .circle.critical {
     background-color: #fff099;
     border-color: #ff9d00;
     animation: pulse 1.5s infinite;
 }
 
-.circle.critical {
+/* Пока что баганутая так что чтоб не выделялось пускай будут одинаковыми */
+/* .circle.critical {
     background-color: #ff9999;
     border-color: #ff0000;
     animation: pulse 1.5s infinite;
-}
+} */
 
 .circle.selected {
     background-color: #99ff99;

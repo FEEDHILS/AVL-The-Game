@@ -503,6 +503,22 @@ class TreeUI {
 function CalculatePosition(pos, depth) {
     const spacing = window.innerWidth/2 / (2**depth+1);
     return spacing * (pos + 1);
+
+    // Экспериментальный код внизу
+
+    // const circleSize = 64;           // или ваш размер круга
+    // const minSpacing = 32;          // минимальный промежуток между центрами соседних узлов
+
+    // const maxNodes   = 2 ** depth;   // сколько позиций на этом уровне
+    // const totalWidth = window.innerWidth;
+    // // рассчитанный автоматом spacing
+    // const autoSp     = totalWidth / (maxNodes + 1);
+    // // выберем большее из автоматического и минимального
+    // const spacing    = Math.max(autoSp, minSpacing);
+
+    // // позиция = отступ слева + номер позиции * spacing
+    // const offset     = (totalWidth - spacing*(maxNodes - 1)) / 2;
+    // return offset + pos * spacing;
 }
 
 
